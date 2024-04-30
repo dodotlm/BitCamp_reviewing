@@ -42,6 +42,38 @@ private       O              X                X           X
     protected로 가로막혀 있는 변수나 메소드들을 super 키워드로 super.메소드()를 만들어 사용할 수 있다.
 
 
+11. 메소드의 오버로드란 동일한 이름으로 여러 개를 생성할 수 있게 만드는 기능이다.
+   물론 당연히 같은 메소드를 여러개로 증식시킬 수는 없지만 이렇게는 가능하다.
+
+public int add(int a, int b) {
+        return a + b;
+    }
+
+>> 이거를
+
+public int add(int a, int b, int c) {
+        return a + b + c;
+    }
+
+>> 매개변수 갯수가 다른 add메소드로!
+
+
+public int add(int a, double b) {
+        return (int)(a + b);
+    }
+
+>> 매개변수 타입이 다른 add메소드로!
+
+이렇게 증식 할 수 있도록 하는게 오버로드이다.
+
+
+12. 우리가 만드는 클래스들도 참조타입이기 대문에 리턴타입으로 지정이 가능하다.
+
+public AccessModifierCalculator createAnObject() {
+		return new AccessModifierCalculator();
+	}
+
+>> 뭐 이런 느낌으로
 
 
 
