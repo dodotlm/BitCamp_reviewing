@@ -1,0 +1,47 @@
+## 클래스, 그리고 객체지향 프로그래밍
+
+1. 일단 클래스와 객체는 과자 틀과 과자의 관계라고 많이들 비유해 왔다.
+2. 클래스 단원에서 쓰이는 용어, 혹은 지칭되는 용어들에 대해 우선 먼저 정리를 해보겠다.
+
+  - 클래스 : 객체와 객체변수를 만드는 기능을 가지고 있다.
+  - 객체 : 보통은 클래스를 호출 할 때 [클래스 객체 = new 클래스()] 이렇게 쓰이지 않는가.
+          이때 이 클래스를 지칭 할 수 있도록 해주는게 객체이다.
+          
+          ex) Animal cat = new Animal();
+              Animal dog = new Animal();
+              참고로 이렇게 동일한 클래스로 다양한 객체를 만들어내면 그 객체들은 서로서로가 다른 객체이다.
+  
+  - 객체변수 : 클래스 내부에 변수를 선언. 그러면 그 변수는 객체 변수가 된다.
+              !!!!!!! 굉장히 중요한 점이 객체변수의 값은 독립적으로 유지된다 !!!!!!!!
+  - 메서드 : 클래스 내에 구현된 함수라고 생각하면 된다.
+  - this : 보기만 해도 덜덜덜 떨리는 메서드이다.
+          간단히 말하면 객체를 지칭해주는 메서드이다.
+          너무 막연한 설명인 것 같으니 예시를 들어주면 단박에 이해가 갈 수 있다.
+
+
+class Animal {
+    String name;
+
+    public void setName(String name) {
+        this.name = name;
+    }
+}
+
+public class Sample {
+    public static void main(String[] args) {
+        Animal cat = new Animal();
+        cat.setName("boby");  // 메서드 호출 -> cat으로 지칭되어진 Animal 클래스의 객체변수에 값을 저장
+        Animal dog = new Animal();
+        dog.setName("happy"); // 메서드 호출 -> dog로 지칭되어진 Animal 클래스의 객체변수에 값을 저장 
+
+        System.out.println(cat.name);
+        System.out.println(dog.name);
+    }
+}
+
+
+
+이런 코드가 있을 때 main에서 객체.객체변수 형태로 메서드에 전달해주고 있다. cat.name
+이 형태가 메서드에 당도했을 때 얘가 단순히 값이 아니라 객체.객체변수 이기 때문에 그 객체를 표현해 줄 필요가 있다.
+그래서! Animal의 객체변수를 지칭하긴 하되, cat이라고 표현한 Animal의 객체변수 를 사용한다. 라는 말이 된다.
+cat으로 지칭한 것과 dog로 지칭한 것과 다른 것이지 않겠는가. this는 이것을 미연에 방지하기 위해 사용되어지는 것이다.
