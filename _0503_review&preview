@@ -16,6 +16,8 @@ return Arrays.stream(s1) // stream<integer> = {1,2,3,4,5}
         .toArray();
 }
 
+ - 인터페이스에도 static으로 메소드를 만들 수 있다.
+
 
 
 
@@ -40,6 +42,18 @@ return Arrays.stream(s1) // stream<integer> = {1,2,3,4,5}
   ex) public 클래스명 implements 인터페이스1, 인터페이스2 {
  
 
+ - 참고로 인터페이스의 상속과 클래스의 상속은 동시에 이루어질 수 있다.
+public class SeoulMultiFlexStadium extends Theater implements MultiFlexStadium
+
+이런 느낌으로...
 
 
+ -  default 메소드
+부모 인터페이스에 새로운 기능을 추가하려면 추상메소드를 선언하고 자식클래스에서 구현해야되는데,
+상속받은 자식클래스의 숫자 많아질수록 구현해야하는 코드가 많아진다.
+
+default 메소드를 통해 부모 인터페이스에만 메소드를 선언하고 구현
+(public) default 리턴타입 메소드명() { 인터페이스에서 구현부까지 구현한다. }
+
+참고로 접근제어자에도 default가 있는데 이것과 그것은 완전히 다른 것이다. 헷갈리지 말도록!
 
