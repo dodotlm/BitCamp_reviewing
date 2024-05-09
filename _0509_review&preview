@@ -22,6 +22,28 @@
    4로는 나누어 떨어지고 100으로는 나누어 떨어지지 않는 년도
 
 
+4. Optional 클래스
+	NullPointerException을 피하기 위해 만들어진 클래스
+	참조타입의 변수들은 예기치 못하게 null이 되는 경우가 있는데
+	Optional 클래스에 참조타입 변수들을 담아서 사용하면
+	Null로 발생하는 예외를 피할 수 있다.
+
+>> Optional 객체 생성
+	String str = null;
+		
+	Optional<String> optionalStr = Optional.ofNullable(str);
+
+- isPresent 메소드
+	현재 Optional 객체에 담겨있는 참조타입의 값이 존재하는지 검사하는 메소드
+	값이 존재하면 true, null이면 false
+- isEmpty 메소드
+	현재 Optional 객체에 담겨있는 참조타입의 값이 비었는지 검사하는 메소드
+	값이 null이면 true, null 아니면 false
+- get메소드
+	Optional 객체에 담겨있는 참조타입의 값을 리턴하는 메소드
+	만약 참조타입의 값이 null이면 예외가 발생한다.
+
+
 
 
 
@@ -84,6 +106,25 @@ Date d = new Date(cal.getTimeInMillis()); // 이렇게 Date 타입으로 변환
 - 그래서 cal.get(Calendar.여러가지메소드들) 로 끌고 올 수 있다.
 Calendar.여러가지메소드들 형태를 취하는 이유는 이 메소드들은 전부 static이기 때문에
 원본 자료형을 가져와야 쓸 수 있다.
+
+ - SimpleDateFormat
+
+SimpleDateFormat 객체를 생성할 때 생성자의 매개변수로 지정할 날짜 포멧을 전달한다.
+Date today = new Date();
+SimpleDateFormat simpleDateFormat1 = new SimpleDateFormat("yy년 MM일 dd일");
+SimpleDateFormat simpleDateFormat2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+이런 식으로
+
+System.out.println(simpleDateFormat1.format(today));
+System.out.println(simpleDateFormat2.format(today));
+
+>>
+24년 05일 09일
+2024-05-09 15:27:13
+이렇게 형식에 맞춰서 나오게 된다.
+단 String형태가 되기 때문에 날짜 연산을 하지는 못한다.
+
+
 
 
 
