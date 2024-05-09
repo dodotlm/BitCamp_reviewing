@@ -65,6 +65,20 @@ BigDecimal remainder(BigDecimal val) : 나머지연산
 
 
 
+## Calendar
+
+ - 객체 설정
+Calendar cal = Calendar.getInstance(); => 시스템의 현재 날짜와 시간을 가지고 있는 객체
+
+- Calendar를 Date타입으로 변환
+Calendar cal = Calendar.getInstance();  // 일단 cal 객체 만들어주고
+Date d = new Date(cal.getTimeInMillis()); // 이렇게 Date 타입으로 변환
+
+
+- 그래서 cal.get(Calendar.여러가지메소드들) 로 끌고 올 수 있다.
+Calendar.여러가지메소드들 형태를 취하는 이유는 이 메소드들은 전부 static이기 때문에
+원본 자료형을 가져와야 쓸 수 있다.
+
 
 
 
