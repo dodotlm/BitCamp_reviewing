@@ -8,3 +8,82 @@ Iterator 선언 : Iterator<String> iterator = keySet.iterator(); <-- 이제부�
 Map 선언1 : Map<String, Integer> myMap = new HashMap<>();
 Map 선언2 : Map<String, Integer> myMap = new TreeMap<>();
 Map 선언2 : Map<String, Integer> myMap = new LinkedHashMap<>();
+
+
+
+
+## 제네릭
+
+ - 자바 제네릭은 타입의 안정성과 재사용성을 높여주는 기능.
+T : Type
+K : Key
+V : Value
+E : Element
+N : Number
+
+... 추가 작성 요망
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## enum
+ - 관련된 상수들을 모아서 클래스처럼 만들어 주는 것.
+ 백문이 불여일견 일단 예시를 한 번 보도록 하자.
+
+public enum MultiValueMonth {
+	
+	// 1. 값이 여러개인 상수 선언
+	// 첫 번째 선언된 상수의 값의 타입, 개수와 일치시켜서 만들어야한다.
+	
+	JAN(1, "JANUARY"),
+	FEB(2, "FEBUARY"),
+	MAR(3, "MARCH");
+	
+	// 2. 위에서 지정한 상수의 값의 개수만큼 변수 선언
+	private int monthVal;
+	private String monthFullName;
+	
+	// 3. 생성자에서도 지정된 값의 개수만큼 변수를 초기화한다.
+	MultiValueMonth(int monthValue, String monthFullName){
+		this.monthVal = monthValue;
+		this.monthFullName = monthFullName;
+	}
+	
+	// 4. 지정된 값의 개수만큼의 getter 메소드 선언
+	public int getMonthValue() {
+		return this.monthVal;
+	}
+	public String getMonthFullName() {
+		return this.monthFullName;
+	}
+}
+
+
+그래서 enum을 호출해서 사용할 때는
+
+enum원형이름 객체이름 = enum원형이름.enum값하나;   <<이렇게 선언해주고
+객체를 이용한다.
+
+
+
