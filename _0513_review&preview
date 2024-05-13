@@ -1,0 +1,10 @@
+## 다시 한 번 짚고 넘어가야 할 것
+
+List의 선언 : List<Integer> intList = new ArrayList<>();
+Set의 선언1 : Set<String> keySet = new HashSet<>();  <-- 요소의 순서가 저장되지는 않음
+Set의 선언2 : Set<String> keySet = new TreeSet<>();  <-- 요소의 순서가 저장
+Set의 선언3 : Set<String> keySet = new LinkedHashSet<>();  <-- 요소의 순서가 저장
+Iterator 선언 : Iterator<String> iterator = keySet.iterator(); <-- 이제부터 iterator객체는 keyset을 조작한다.
+Map 선언1 : Map<String, Integer> myMap = new HashMap<>();
+Map 선언2 : Map<String, Integer> myMap = new TreeMap<>();
+Map 선언2 : Map<String, Integer> myMap = new LinkedHashMap<>();
