@@ -1,0 +1,21 @@
+## 데이터 베이스
+
+준비물 :  자바17버전, 오라클, DBeaver
+
+다 깔았으면 cmd를 켜고...
+>> sqlplus
+>> sys as sysdba      유저 네임 입력
+>> !dkdlxl1234        비밀번호 입력
+>> conn/as sysdba     관리자 권한으로 접속
+>> create user 자기가입력할아이디 identified by 비밀번호;    계정 등록
+>> grant connect, resource, dba to 자기가입력한아이디;       권한 부여
+>> commit;
+
+여담으로 권한 취소하려면 grant가 아니라 revoke를 사용해주면 된다.
+
+자 이제 DBeaver를 키고 좌측 최상단에 '파일' 바로 밑에 있는 버튼을 누르고 창이 나오는데 그 중 오라클을 선택해 준다.
+
+
+
+
+
