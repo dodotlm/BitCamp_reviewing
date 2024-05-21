@@ -1,5 +1,7 @@
 ## 데이터 베이스 준비...
 
+
+
 준비물 :  자바17버전, 오라클, DBeaver
 
 다 깔았으면 cmd를 켜고...
@@ -18,7 +20,466 @@
 + 조작법 : CTRL+S가 저장이고 CTRL_ENTER가 실행이다. 골 때리는 건 커서가 있는 줄의 테이블만 실행이된다.
 자바 이클립스 마냥 실행 시키면 전체가 돌아가는 것이 아니라.
 
+
+
 ## SQL
 
 
 
+-- 1. 기본 Select 구문
+-- 1-1. 과목 테이블에서 과목번호, 과목이름, 학점, 담당교수번호 조회
+
+SELECT CNO -- 골라라
+	, CNAME
+	, ST_NUM
+	, PNO
+	FROM COURSE; -- "여기서"
+
+-- 1-2. 예제) 학생 테이블에서 학생번호와 학생 이름 조회
+SELECT SNO
+	, SNAME
+	FROM STUDENT;
+
+-- 1-3. 조회할 테이블의 모든 컬럼의 데이터를 조회할 때는 컬럼명 대신 *를 사용해도 된다.
+
+SELECT *
+	FROM DEPT;
+
+-- 2. 컬럼이나 테이블에 별칭 붙이기
+-- 3-1. 컬럼에 별칭붙이기
+-- 조회해올 데이터의 칼럼에 별칭을 붙일 수 있다. 조회된 데이터는 새로운 가상테이블을 생성하는데
+-- 가상테이블의 컬럼명은 붙인 상태로 할당된다. 별칭은 한글로 붙여도 무방하나 대부분 영어로 붙인다.
+-- AS 키워드를 이용해서 별칭을 붙일 수 있는데 as 키워드는 생략 가능하다.
+
+SELECT PNO AS PRFESSOR_NO
+	, PNAME AS 교수이름
+	, ORDERS 직위
+	FROM PROFESSOR;
+
+
+-- 2-2. 테이블에 별칭 붙이기
+-- 테이블에 붙인 별칭은 SELECT 구문 안에서 사용하기 위한 별칭이다.
+-- 여러개의 테이블을 동시에 조회할 때 주로 사용된다.
+-- 여러개의 테이블을 동시에 조회하면 어떤 테이블의 칼럼인지 모호해지는 경우가 있는데 그 경우를 대비하기 위해
+-- 어떤 테이블의 칼럼인지 명확하게 해주기 위해 주로 사용
+
+-- 테이블에 별칭을 줄 때는 AS키워드를 사용할 수 없다. 테이블명 바로 뒤에 붙일 별명을 달아준다.
+SELECT ST.SNO
+	, ST.SNAME
+	FROM STUDENT ST;
+
+-- 여러개의 테이블 동시에 조회시 모호한 칼럼의 경우
+SELECT ST.SNO
+	, ST.SNAME -- 앞에 별칭을 달아줘야 안 헷갈리지
+	, SC.RESULT -- 이런건 양쪽에 다 있기 때문에...
+	FROM STUDENT ST -- 이렇게 별칭을 달아준다.
+	JOIN SCORE SC
+	ON ST.SNO = SC.SNO;
+
+
+-- 3. NULL인 데이터의 처리방식을 지정하는 NVL
+
+SELECT DNO
+	, DNAME
+	, LOC
+	, DIRECTOR -- 여기에 NULL 값이 나온다.
+	FROM DEPT;
+
+SELECT DNO
+	, DNAME
+	, LOC
+	, NVL(DIRECTOR, '팀장없음') AS DIRECTOR-- 그래서 NULL 값이 나오는 대신 '팀장없음'으로 나오게 한다.
+	FROM DEPT;
+
+
+-- 3-1. EX) 사원테이블에서 사원번호, 사원이름, 급여, 보너스 조회하는데
+-- 보너스가 NULL인 사원은 0으로 조회
+
+SELECT EP.ENO 
+	, EP.ENAME 
+	, EP.SAL
+	, NVL(EP.COMM, 0) AS COMM
+	FROM EMP EP;
+	
+-- 4. 연결 연산자 ( || )
+-- 한 번에 연결해서 조회하고 싶은 칼럼들을 ||를 이용해서 연결 조회할 수 있다
+-- 4-1. 사원의 급여와 이름을 -로 연결해서 조회
+
+SELECT ENO
+	,ENAME || '-' || SAL
+	FROM EMP;
+
+-- 4-2. 학생번호와 기말고사점수를 -로 연결해서 조회(SCORE)
+
+SELECT SNO || '-' || RESULT
+	FROM SCORE;
+
+-- 5. 중복제거자 DISTINCT
+-- 5-1. 중복을 제거하지 않았을 때
+
+SELECT JOB
+	FROM EMP;
+
+-- 5-2. DISTINCT 사용해서 중복제거 했을 때
+SELECT DISTINCT JOB
+	FROM EMP;
+
+-- 5-3. 컬럼 여러개에 대한 DISTINCT
+-- 여러 개의 칼럼을 조회할 때 DISTINCT가 걸리면
+-- 조회된 여러개의 칼럼을 데이터 셋 하나로 인식해서
+-- 조회된 모든 칼럼의 데이터가 중복돼야 중복으로 인식한다.
+
+SELECT DISTINCT JOB
+	,MGR
+	FROM EMP;
+-- 그러니까 JOB이랑 MGR 두 개 모두 중복 되는 경우에만 중복으로 인식하는거라구ㅇㅇ
+
+-- 6. 데이터 정렬 기준을 정하는 ORDERED BY
+-- 6-1. 칼럼 하나만 정렬
+-- 오름차순(ASC)로 정렬할 때는 ASC를 생략해도 된다. 
+
+
+SELECT SNO
+	, SNAME
+	, MAJOR
+	, SYEAR
+	, AVR
+	FROM STUDENT
+	ORDER BY SYEAR;
+
+-- 내림차순으로 정렬할 때는 항상 DESC를 명시해야 한다.
+
+SELECT SNO
+	, SNAME
+	, MAJOR
+	, SYEAR
+	, AVR
+	FROM STUDENT
+	ORDER BY SNAME DESC;
+
+-- DATABASE에서 정렬은 문자로도 가능.
+
+
+-- 6-2. 컬럼 여러개로 정렬
+-- 처음 지정된 컬럼으로 정렬이 된 상태에서 다음 지정된 컬럼으로 정렬한다.
+
+SELECT SNO
+	, SNAME
+	, MAJOR
+	, SYEAR
+	, AVR
+	FROM STUDENT
+	ORDER BY SYEAR, SNAME; -- 일단 학년별로 정렬한 상태에서 그 중 이름 순서대로 정렬이 된다.
+
+-- ORDER BY 여러개의 칼럼을 지정할 때는 각 컬럼에 정렬방식(ASC, DESC)를 각각 지정할 수 있다.
+
+SELECT SNO
+	, SNAME
+	, MAJOR
+	, SYEAR
+	, AVR
+	FROM STUDENT
+	ORDER BY SYEAR DESC, AVR DESC;
+
+-- 6-3. 사원 테이블에서 사원번호, 사원이름, 부서번호, 급여 조회하는데
+-- 부서 번호가 빠르고 급여가 높은 사원부터 조회
+
+SELECT ENO
+	, ENAME
+	, DNO
+	, SAL
+	FROM EMP
+	ORDER BY DNO, SAL DESC;
+
+
+-- 6-4. 컬럼에 별칭을 붙인 경우에는 별칭으로도 정렬가능
+
+SELECT ENO
+	, ENAME
+	, DNO AS 부서번호 
+	, SAL AS 급여
+	FROM EMP
+	ORDER BY 부서번호, 급여 DESC;
+
+
+
+
+
+-- 7. 조건을 걸어서 원하는 데이터만 조회하는 WHERE 절
+-- WHERE 절은 FROM이나 JOIN-ON절 다음에 작성한다.
+-- 7-1. WHERE절에서 값의 크기를 비교할 때는 자바와 마찬가지로 부등호를 사용한다. (> < >= <=)
+-- 사원중에 급여가 3000이상인 사원번호, 사원이름, 급여 조회
+
+SELECT ENO
+	, ENAME
+	, SAL
+	FROM EMP
+	WHERE SAL >= 3000;
+
+-- 학생 중에 평점이 3.0 이하인 학생번호, 학생이름, 전공, 학년, 평점 조회
+
+SELECT SNO
+	, SNAME
+	, MAJOR
+	, SYEAR
+	, AVR
+	FROM STUDENT
+	WHERE AVR <= 3.0;
+	
+
+-- 7-2. WHERE 절에서 값의 동일여부를 비교할 때는 =, !=을 비교한다.
+-- 전공이 화학과인 학생의 학생번호, 학생이름, 전공, 학년 조회
+
+SELECT SNO
+	, SNAME
+	, MAJOR
+	, SYEAR
+	FROM STUDENT
+	WHERE MAJOR = '화학';
+
+-- 전공이 화학과가 아닌 학생의 학생번호, 학생이름, 전공, 학년 조회
+
+SELECT SNO
+	, SNAME
+	, MAJOR
+	, SYEAR
+	FROM STUDENT
+	WHERE MAJOR != '화학';
+
+-- 7-3. WHERE 절에서 조건을 비교할 때는 항상 컬럼의 타입과 동일한 타입의 값으로 비교한다.
+-- 사원 테이블의 급여 컬럼은 NUMBER타입인데 문자열과 비교를 하게 되면
+-- 급여 칼럼에 있는 모든 데이터가 문자열로 변환되는 과정이 필요하다.
+-- 데이터가 많아질수록 변환되는데 시간이 오래 걸리기 때문에
+-- 항상 테이블의 컬럼 데이터가 타입 변환이 일어나지 않도록 쿼리를 작성해야 한다.
+SELECT ENO
+	, ENAME
+	, HDATE
+	FROM EMP
+	WHERE HDATE < TO_DATE('2000-10-10:23:59:59', 'YYYY-MM-DD:HH24:MI:SS');
+-- WHERE TO_CHAR(HDATE, 'YYYY-MM-DD:HH24:MI:SS') < '2000-10-10:23:59:59' 절대 해서는 안되는 행동
+-- 날짜는 무조건 TO_DATE 형식이 되어야 한다.
+
+
+-- EX) 사원 중에 업무가 경영인 사원의 사원번호, 사원이름, 업무, 급여, 보너스 조회
+
+SELECT ENO
+	, ENAME
+	, DNO
+	,JOB
+	, SAL
+	, COMM 
+	FROM EMP
+	WHERE JOB = '경영';
+	
+-- 7-4. NULL인 값의 비교는 =, !=로 하지 않고 IS NULL, IS NOT NULL이라는 특수한 구문을 이용한다.
+-- 보너스가 NULL인 사원의 사원번호, 사원이름, 업무, 급여, 보너스 조회
+
+SELECT ENO
+	, ENAME
+	, JOB
+	, SAL
+	, COMM
+	FROM EMP
+	WHERE COMM IS NULL;
+
+-- 보너스가 NULL이 아닌 사원의 사원번호, 사원이름, 업무, 급여, 보너스 조회
+
+SELECT ENO
+	, ENAME
+	, JOB
+	, SAL
+	, COMM
+	FROM EMP
+	WHERE COMM IS NOT NULL;
+
+-- 부서 테이블에서 팀장이 NULL이 아닌 부서의 부서번호, 부서이름 조회
+
+SELECT DNO
+	, DNAME
+	FROM DEPT
+	WHERE DIRECTOR IS NOT NULL;
+
+
+-- 7-5. 문자열을 포함한 데이터 조회(LIKE)
+-- 학생 중 이름이 우로 끝나는 학생의 학생번호, 학생이름 조회
+
+SELECT SNO
+	, SNAME
+	FROM STUDENT
+	WHERE SNAME LIKE '%우';
+	
+-- 과목 중에 화학이 포함되어 있는 과목의 과목번호, 과목이름, 학점 조회
+
+SELECT CNO
+	, CNAME
+	, ST_NUM
+	FROM COURSE
+	WHERE CNAME LIKE '%화학%';
+
+-- 교수 중에 이름이 세 글자인 교수의 교수이름 교수번호 조회
+
+SELECT PNO
+	, PNAME
+	FROM PROFESSOR
+	WHERE PNAME LIKE '___'; -- _가 3개 연속 있는 모양이다.
+	
+
+-- 8. 다중 조건을 만들어 주는 AND절, OR절
+-- 8-1. 다중 조건을 모두 충족하는 데이터를 조회하는 AND 절
+-- 학생 중에 1학년이면서 성이 노씨인 학생이 학생번호, 학생이름, 전공, 학년 조회
+
+	SELECT SNO
+		, SNAME
+		, MAJOR
+		, SYEAR
+		FROM STUDENT
+		WHERE SYEAR = 1
+			AND SNAME LIKE '노%';
+		
+-- 사원 중에 회계업무를 하면서 급여가 3000이상인 이름이 세 글자인 사원의 사원번호, 사원이름, 업무, 급여 조회
+		
+SELECT ENO
+	, ENAME
+	, JOB
+	, SAL
+	FROM EMP
+	WHERE JOB LIKE '회계'
+		AND SAL >= 3000
+		AND ENAME LIKE '___';
+
+
+-- 8-2. 다중 조건 중 하나라도 충족하는 데이터들을 모두 조회하는 OR 절
+-- 학생 중 1학년이거나 성이 노씨인 학생의 학생번호, 학생이름, 전공, 학년, 조회
+
+SELECT SNO
+		, SNAME
+		, MAJOR
+		, SYEAR
+		FROM STUDENT
+		WHERE SYEAR = 1
+			OR SNAME LIKE '노%';
+
+-- 전공이 화학이나 물리인 학생의 학생번호, 학생이름, 전공 조회
+	
+SELECT SNO
+		, SNAME
+		, MAJOR
+		FROM STUDENT
+		WHERE MAJOR LIKE '화학'
+			OR MAJOR LIKE '물리';
+
+
+-- 8-3. AND, OR 혼합 사용
+-- AND, OR를 혼합하여 사용하면 조건을 알아보기 힘들어 지기 때문에
+-- () 조건의 우선순위를 정해준다.
+-- 전공이 화학과이거나 물리인 학생 중 1학년인 학생의 학생번호, 학생이름, 전공, 학년 조회
+		
+SELECT SNO
+	, SNAME
+	, MAJOR
+	, SYEAR
+	FROM STUDENT
+	WHERE (MAJOR LIKE '화학'
+		OR MAJOR LIKE '물리')  -- 소괄호를 쳐서 조건의 우선순위를 만들어 줘야 한다.
+	    AND SYEAR = 1;
+	   
+-- 부서번호가 10이거나 30인 사원 중 급여가 3000이상인 사원의 사원번호, 사원이름, 급여, 부서조회
+	   
+SELECT ENO
+	, ENAME
+	, DNO
+	, SAL
+	FROM EMP
+	WHERE (DNO = 10
+		OR DNO = 30)
+		AND SAL >= 3000;
+
+-- 9. 특정한 범위의 값인지 비교해주는 BETWEEN AND 구문
+-- 급여가 3000이상 5000이하인 사원의 사원번호, 사원이름, 사원이름, 급여 조회
+
+SELECT ENO
+	, ENAME
+	, SAL
+	FROM EMP
+	WHERE SAL BETWEEN 3000 AND 5000;
+
+-- 평점이 3.0이상 3.7이하이면서 학년이 2학년이상 4학년이하인 학생의 학생번호, 학생이름, 평점, 학년, 전공 조회
+
+SELECT SNO
+	, SNAME
+	, AVR
+	, MAJOR
+	, SYEAR
+	FROM STUDENT
+	WHERE (AVR BETWEEN 3.0 AND 3.7)
+		AND (SYEAR BETWEEN 2 AND 4);
+	
+SELECT *
+	FROM PROFESSOR;
+
+-- 현재 DB 서버에 접속한 세션의 날짜표출 방식 변경
+ALTER SESSION SET NLS_DATE_FORMAT = 'yyyy/mm/dd HH24:mi:ss';
+
+-- BETWEEN AND 구문에서 두 날짜 사이에 있는 데이터도 조회할 수 있다.
+-- TO_DATE : 데이터의 형식을 날짜형식으로 변경한다.
+-- TO_DATE(문자열, 문자열의 날짜형식)
+-- 2000년 1월 1일 ~ 2001년 12월 31일 사이에 부임한 교수의 교수번호, 교수이름, 부임일자 조회
+SELECT PNO
+	, PNAME
+	, HIREDATE
+	FROM PROFESSOR
+	WHERE HIREDATE
+		BETWEEN TO_DATE('20000101 00:00:00' , 'yyyyMMdd HH24:mi:ss') -- 뒤에 있는 부분은 앞에것이 어떤 식으로 이루어진 날자인지 설명해주는 역할을 한다.
+			AND TO_DATE('2001/12/31 23:59:59' , 'yyyy/MM/dd HH24:mi/ss'); 
+			-- 그리고 소문자 대문자는 큰 차이가 없다. 대신 훗날 자바와의 혼용을 피하기 위해 쿼리는 대문자로 대부분 바꿔주는 것이 좋다.
+			
+-- 10. 여러개의 데이터와 값을 비교하는 IN 절
+
+-- 전공이 화학이거나 물리인 학생의 학생번호, 학생이름, 전공, 학년 조회
+		
+SELECT SNO
+	, SNAME
+	, MAJOR
+	, SYEAR
+	FROM STUDENT
+--	WHERE MAJOR = '화학'
+--		OR MAJOR = '물리';
+	WHERE MAJOR IN ('화학', '물리'); -- MAJOR에 이것들이 있냐... 즉 OR절을 손쉽게 줄일 수 있는 IN문이라고 할 수 있다.
+	
+-- 부서번호가 10이거나 20이거나 30인 사원의 사원번호, 사원이름, 업무, 부서번호 조회
+
+SELECT ENO
+	, ENAME
+	, JOB
+	, DNO
+	FROM EMP
+	WHERE DNO IN ('10','20','30');
+
+-- 전공이 생물이거나 유공이면서 1,2,3학년인 학생의 학생번호, 학생이름, 전공, 학년 조회
+
+SELECT SNO
+	, SNAME
+	, MAJOR
+	, SYEAR
+	FROM STUDENT
+	WHERE MAJOR IN ('생물', '유공')
+		AND SYEAR IN ('1','2','3')
+	ORDER BY SNAME;
+
+
+-- 거의 모든 DBMS에서 문자열은 작은따옴표('')로 표시한다.
+-- 큰 따옴표("")는 별칭(alias)를 붙여줄때만 사용한다.
+-- 업무가 개발이거나 경영인 사원 중에 보너스가 700이상인 사원의 사원번호, 사원이름, 업무, 급여, 보너스 조회
+
+SELECT ENO AS "사원번호"
+	, ENAME AS "사원이름"
+	, JOB AS "업무"
+	, SAL AS "급여"
+	, COMM AS "보너스"
+	FROM EMP
+	WHERE JOB IN ('개발', '경영')
+	AND COMM >= 700;
+
+
+
+	
