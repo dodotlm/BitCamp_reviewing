@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>상품 주문서</h1>
+    <form action="">
+    <fieldset>
+        <legend><b><p style="color: rgb(90, 38, 138); font-size: 110%;">개인 정보</p></b></legend>
+        <ul style="list-style-type: none;">
+            <li>
+                <label for="name"><b>이름</b></label>
+                <input type="text" id="이름" placeholder="여백없이 입력">
+            </li>
+            <li>
+                <label for="u-phone"><b>연락처</b></label>
+            <input type="tel" id="tel" pattern="[0-9]{3}-[0-9]{4}-[0-9]{4}" placeholder="연락가능한 번호">
+            </li>
+        </ul>
+    </fieldset>
+
+    <fieldset>
+        <legend><b><p style="color: rgb(90, 38, 138); font-size: 110%;">배송지 정보</p></b></legend>
+        <ul style="list-style-type: none;">
+            <li>
+                <label for="name"><b>주소</b></label>
+                <input type="text" id="주소" >
+            </li>
+            <li>
+                <label for="u-phone"><b>전화번호</b></label>
+            <input type="tel" id="tel" pattern="[0-9]{3}-[0-9]{4}-[0-9]{4}" placeholder="연락가능한 번호">
+            </li>
+            <li>
+                <label for="name"><b>메모</b></label>
+                <textarea name="gesipan" rows="5" cols="60">본사 지원 동기를 간략히 써 주세요</textarea>
+            </li>	
+        </ul>
+    </fieldset>
+
+    <fieldset>
+        <legend><b><p style="color: rgb(90, 38, 138); font-size: 110%;">주문 정보</p></b></legend>
+        <ul>
+            <li>
+                <input type="checkbox">과테말라 안티구아 (100g)
+                <input type="number" id="1Cnt" name="1Cnt" min="1" max="100" step="1" value="0">개
+            </li>
+            <li>
+                <input type="checkbox">인도네시아 만델링 (100g)
+                <input type="number" id="2Cnt" name="2Cnt" min="1" max="100" step="1" value="0">개
+            </li>
+            <li>
+                <input type="checkbox">탐라는도다(블렌딩) (100g)
+                <input type="number" id="3Cnt" name="3Cnt" min="1" max="100" step="1" value="0">개
+            </li>
+        </ul>
+    </fieldset>
+    <input type="submit" value="주문하기" style="text-align: center;">
+    <input type="reset" value="다시작성" style="text-align: center;">
+
+    </form>
+</body>
+</html>
