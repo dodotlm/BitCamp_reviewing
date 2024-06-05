@@ -4,40 +4,61 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <style>
+        table{
+            /*외곽선을 그려주는 속성*/
+            border: 1px rgb(255, 255, 255) solid;
+            width: 300px;
+            height: 85%;
+            table-layout: fixed;
+        }
+        th{
+            border: 1px rgb(255, 255, 255) solid;
+            width: 100px;
+            text-align: left;
+        }
+        td{
+            border: 1px rgb(255, 255, 255) solid;
+            width: 300px;
+            
+        }
+        
+    </style>
 </head>
 <body>
     <h1>상품 주문서</h1>
     <form action="">
     <fieldset>
         <legend><b><p style="color: rgb(90, 38, 138); font-size: 110%;">개인 정보</p></b></legend>
-        <ul style="list-style-type: none;">
-            <li>
-                <label for="name"><b>이름</b></label>
-                <input type="text" id="이름" placeholder="여백없이 입력">
-            </li>
-            <li>
-                <label for="u-phone"><b>연락처</b></label>
-            <input type="tel" id="tel" pattern="[0-9]{3}-[0-9]{4}-[0-9]{4}" placeholder="연락가능한 번호">
-            </li>
-        </ul>
+        <table>
+            <tr>
+            <th><label for="name"><b>&nbsp&nbsp&nbsp&nbsp&nbsp이름</b></label></th>
+            <td><input type="text" id="이름" placeholder="여백없이 입력"></td>
+            </tr>
+            <tr>
+            <th><label for="u-phone"><b>&nbsp&nbsp&nbsp&nbsp&nbsp연락처</b></label></th>
+            <td><input type="tel" id="tel" pattern="[0-9]{3}-[0-9]{4}-[0-9]{4}" placeholder="연락가능한 번호"></td>
+            </tr>
+            <tr><th>&nbsp </th></tr>
+        </table>
     </fieldset>
 
     <fieldset>
         <legend><b><p style="color: rgb(90, 38, 138); font-size: 110%;">배송지 정보</p></b></legend>
-        <ul style="list-style-type: none;">
-            <li>
-                <label for="name"><b>주소</b></label>
-                <input type="text" id="주소" >
-            </li>
-            <li>
-                <label for="u-phone"><b>전화번호</b></label>
-            <input type="tel" id="tel" pattern="[0-9]{3}-[0-9]{4}-[0-9]{4}" placeholder="연락가능한 번호">
-            </li>
-            <li>
-                <label for="name" style="text-align: top;"><b>메모</b></label>
-                <textarea name="gesipan" rows="5" cols="60">본사 지원 동기를 간략히 써 주세요</textarea>
-            </li>	
-        </ul>
+        <table>
+            <tr>
+                <th><label for="name"><b>&nbsp&nbsp&nbsp&nbsp&nbsp주소</b></label></th>
+                <td><input type="text" id="이름" size=58%></td>
+                </tr>
+                <tr>
+                <th><label for="u-phone"><b>&nbsp&nbsp&nbsp&nbsp&nbsp전화번호</b></label></th>
+                <td><input type="tel" id="tel" pattern="[0-9]{3}-[0-9]{4}-[0-9]{4}"></td>
+                </tr>
+            <tr><th><label for="name"><b>&nbsp&nbsp&nbsp&nbsp&nbsp메 모<br><br><br><br></b></label></th>
+                <td><textarea name="gesipan" rows="5" cols="60"></textarea></td>
+            </tr>
+        </table>
+        
     </fieldset>
 
     <fieldset>
