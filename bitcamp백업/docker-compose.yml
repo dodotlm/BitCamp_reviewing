@@ -1,0 +1,37 @@
+version: '3.8'
+services:
+  docker-mysql:
+    image: mysql
+    networks:
+      - wordpress000net1
+    volumes:
+      - volume-mysql:/var/lib/mysql
+    ports:
+      - 3307:3306
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: '!dkdlxl1234'
+      MYSQL_DATABASE: studydb
+      MYSQL_USER: study
+      MYSQL_PASSWORD: '!dkdlxl1234'
+  docker-wordpress:
+    depends_on:
+      - docker-mysql
+    image: wordpress
+    networks:
+      - wordpress000net1
+    volumes:
+      - volume-wordpress:/var/www/html
+    ports: 
+      - 8085:80
+    restart: always
+    environment:
+      WORDPRESS_DB_HOST: docker-mysql
+      WORDPRESS_DB_NAME: studydb
+      WORDPRESS_DB_USER: study
+      WORDPRESS_DB_PASSWORD: '!dkdlxl1234'
+networks:
+  wordpress000net1:
+volumes:
+  volume-mysql:
+  volume-wordpress:
